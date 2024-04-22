@@ -1,0 +1,69 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title> Weather App </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="main">
+    <span class="city">{{city}} </span>
+    <span class="country">{{country}}</span>
+    <span class="date">{{res?.current_weather?.time | date}}</span>
+
+    <div class="icon">
+      <img [src]="currentWeather?.iconPath" alt="" />
+    </div>
+
+    <span class="description">{{currentWeather?.value}}</span>
+    <span class="temperature">{{res?.current_weather?.temperature}}</span>
+    <span class="celcius">℃</span>
+  </div>
+  <!-- 7 Day forcast grid -->
+  <ion-grid>
+    <!-- Day Row -->
+    <ion-row>
+      <ion-col class="day" *ngFor="let day of res?.daily?.time"
+        >{{day | date:'E'}}</ion-col
+      >
+    </ion-row>
+    <!-- Chances of precipitation -->
+    <ion-row>
+      <ion-col
+        class="precipitation"
+        *ngFor="let prep of res?.daily?.precipitation_sum"
+        >{{prep}}mm</ion-col
+      >
+    </ion-row>
+    <!-- Weather icon -->
+    <ion-row>
+      <ion-col class="icon-sm" *ngFor="let code of res?.daily?.weathercode">
+        <img [src]="getPath(code)" alt="" />
+      </ion-col>
+    </ion-row>
+    <!-- Mac Temperature -->
+    <ion-row>
+      <ion-col
+        class="hi-sm"
+        *ngFor="let max_Temp of res?.daily?.temperature_2m_max"
+        [ngStyle]="{'color': getColor(max_Temp)}"
+        >{{max_Temp}}℃</ion-col
+      >
+    </ion-row>
+    <!-- Min Temperatre -->
+    <ion-row>
+      <ion-col
+        class="lo-sm"
+        *ngFor="let min_Temp of res?.daily?.temperature_2m_min"
+        [ngStyle]="{'color': getColor(min_Temp)}"
+        >{{min_Temp}}℃</ion-col
+      >
+    </ion-row>
+
+    <ion-row class="copyrightbk"> 
+      <ion-col class="copyrightbk">© James Yobe 2023</ion-col>
+    </ion-row>
+    <!-- <ion-item lines="none" class="copyrightbk">
+      <ion-label class="copyright">© James Yobe 2022</ion-label>
+    </ion-item> -->
+  </ion-grid>
+</ion-content>
